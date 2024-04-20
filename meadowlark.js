@@ -4,17 +4,11 @@
 const express = require('express');
 const { engine } = require('express-handlebars');
 
+const fortune = require('./libs/fortune');
+
 const app = express();
 
 const port = process.env.PORT || 3000;
-
-const fortune = [
-    "Conquer your fears or they will conquer you.",
-    "Rivers need springs.",
-    "Do not fear what you don't know.",
-    "You will have a pleasant surprise.",
-    "Whenever possible, keep it simple.",
-];
 
 app.engine('handlebars', engine(
     {
@@ -29,8 +23,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/about', (req, res) => {
-    const randomFortune = fortune[Math.floor(Math.random() * fortune.length)];
-    res.render('about', { fortune: randomFortune });
+    res.render('about', { fortune: fortune.getFortune() });
 });
 
 //pagina 404 personalizada
